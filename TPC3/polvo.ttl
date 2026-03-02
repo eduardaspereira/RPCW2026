@@ -1,0 +1,220 @@
+@prefix : <http://rpcw.di.uminho.pt/2026/polvo-filosofico/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://rpcw.di.uminho.pt/2026/polvo-filosofico/> .
+
+<http://rpcw.di.uminho.pt/2026/polvo-filosofico> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/comem
+:comem rdf:type owl:ObjectProperty ;
+       rdfs:domain :Cliente ;
+       rdfs:range :Prato .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/contêmPrato
+:contêmPrato rdf:type owl:ObjectProperty ;
+             rdfs:domain :Pedido ;
+             rdfs:range :Prato .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/executaFunçãoDe
+:executaFunçãoDe rdf:type owl:ObjectProperty ;
+                 rdfs:domain :Funcionário ;
+                 rdfs:range :Cozinheiro ,
+                            :Garçom .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/fazemPedido
+:fazemPedido rdf:type owl:ObjectProperty ;
+             rdfs:domain :Cliente ;
+             rdfs:range :Pedido .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/temIngredientesOrigemAnimal
+:temIngredientesOrigemAnimal rdf:type owl:ObjectProperty ;
+                             rdfs:domain :Prato ;
+                             rdfs:range :IngredientesOrigemAnimal .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/trabalhaEm
+:trabalhaEm rdf:type owl:ObjectProperty ;
+            rdfs:domain :Funcionário ;
+            rdfs:range :Restaurante .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/têmIngrediente
+:têmIngrediente rdf:type owl:ObjectProperty ;
+                rdfs:domain :Prato ;
+                rdfs:range :Ingredientes .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/Agente
+:Agente rdf:type owl:Class .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/Animal
+:Animal rdf:type owl:Class ;
+        rdfs:subClassOf :Agente .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/Cliente
+:Cliente rdf:type owl:Class ;
+         rdfs:subClassOf :Agente .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/Cozinheiro
+:Cozinheiro rdf:type owl:Class ;
+            rdfs:subClassOf :Funcionário .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/Funcionário
+:Funcionário rdf:type owl:Class ;
+             rdfs:subClassOf :Agente ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty :trabalhaEm ;
+                               owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                               owl:onClass :Restaurante
+                             ] .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/Garçom
+:Garçom rdf:type owl:Class ;
+        rdfs:subClassOf :Funcionário .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/Gato
+:Gato rdf:type owl:Class ;
+      rdfs:subClassOf :Animal .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/Gestor
+:Gestor rdf:type owl:Class ;
+        rdfs:subClassOf :Funcionário .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/Ingr_Polvo
+:Ingr_Polvo rdf:type owl:Class ;
+            rdfs:subClassOf :IngredientesOrigemAnimal .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/Ingredientes
+:Ingredientes rdf:type owl:Class .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/IngredientesOrigemAnimal
+:IngredientesOrigemAnimal rdf:type owl:Class ;
+                          rdfs:subClassOf :Ingredientes .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/Máquina
+:Máquina rdf:type owl:Class ;
+         rdfs:subClassOf :Agente ,
+                         [ rdf:type owl:Class ;
+                           owl:complementOf :Cliente
+                         ] .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/Pedido
+:Pedido rdf:type owl:Class ;
+        rdfs:subClassOf [ rdf:type owl:Restriction ;
+                          owl:onProperty :contêmPrato ;
+                          owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                          owl:onClass :Prato
+                        ] .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/Pessoa
+:Pessoa rdf:type owl:Class ;
+        rdfs:subClassOf :Agente .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/Polvo
+:Polvo rdf:type owl:Class ;
+       rdfs:subClassOf :Animal ,
+                       [ rdf:type owl:Class ;
+                         owl:complementOf [ rdf:type owl:Restriction ;
+                                            owl:onProperty :comem ;
+                                            owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                 owl:onProperty :têmIngrediente ;
+                                                                 owl:someValuesFrom :Ingr_Polvo
+                                                               ]
+                                          ]
+                       ] .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/Prato
+:Prato rdf:type owl:Class .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/PratoCarnívoro
+:PratoCarnívoro rdf:type owl:Class ;
+                rdfs:subClassOf :Prato ;
+                owl:disjointWith :PratoVegano .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/PratoOntologicamenteAmbíguo
+:PratoOntologicamenteAmbíguo rdf:type owl:Class ;
+                             rdfs:subClassOf :Prato .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/PratoVegano
+:PratoVegano rdf:type owl:Class ;
+             owl:equivalentClass [ rdf:type owl:Restriction ;
+                                   owl:onProperty :têmIngrediente ;
+                                   owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                   owl:onClass :IngredientesOrigemAnimal
+                                 ] ;
+             rdfs:subClassOf :Prato .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/Restaurante
+:Restaurante rdf:type owl:Class ;
+             rdfs:subClassOf [ rdf:type owl:Restriction ;
+                               owl:onProperty [ owl:inverseOf :trabalhaEm
+                                              ] ;
+                               owl:someValuesFrom :Cozinheiro
+                             ] .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/Aristoteles
+:Aristoteles rdf:type owl:NamedIndividual ,
+                      :Gestor ,
+                      :Polvo ;
+             :trabalhaEm :O_Polvo_Filosófico .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/O_Polvo_Filosófico
+:O_Polvo_Filosófico rdf:type owl:NamedIndividual ,
+                             :Restaurante .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/RoboCozinheiro
+:RoboCozinheiro rdf:type owl:NamedIndividual ,
+                         :Cozinheiro ,
+                         :Máquina ;
+                :trabalhaEm :O_Polvo_Filosófico .
+
+
+###  http://rpcw.di.uminho.pt/2026/polvo-filosofico/Schrödinger
+:Schrödinger rdf:type owl:NamedIndividual ,
+                      :Cliente ,
+                      :Funcionário ,
+                      :Gato .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
