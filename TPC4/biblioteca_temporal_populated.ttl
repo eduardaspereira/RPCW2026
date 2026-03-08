@@ -1,0 +1,1688 @@
+@prefix : <http://rpcw.di.uminho.pt/2026/untitled-ontology-32/> .
+@prefix ns1: <http://www.semanticweb.org/joaomoura03/ontologies/2026/bibliotecatemporal/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://rpcw.di.uminho.pt/2026/untitled-ontology-32/> .
+
+<http://rpcw.di.uminho.pt/2026/untitled-ontology-32> rdf:type owl:Ontology .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/nome
+:nome rdf:type owl:AnnotationProperty .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/refereEvento
+:refereEvento rdf:type owl:AnnotationProperty .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/trabalhamEm
+:trabalhamEm rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/existemEm
+:existemEm rdf:type owl:ObjectProperty ;
+           rdfs:domain :Livro ;
+           rdfs:range :LinhaTemporal .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/ocorremEm
+:ocorremEm rdf:type owl:ObjectProperty ;
+           rdfs:domain :Evento ;
+           rdfs:range :LinhaTemporal .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/pertencemA
+:pertencemA rdf:type owl:ObjectProperty ;
+            rdfs:domain :Livro ;
+            rdfs:range :Biblioteca .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/refereA
+:refereA rdf:type owl:ObjectProperty .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/requisitam
+:requisitam rdf:type owl:ObjectProperty ;
+            rdfs:domain :Leitor ;
+            rdfs:range :Livro .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/sãoEscritosPor
+:sãoEscritosPor rdf:type owl:ObjectProperty ;
+                rdfs:domain :Livro ;
+                rdfs:range :Autor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/trabalhaEm
+:trabalhaEm rdf:type owl:ObjectProperty ,
+                     owl:FunctionalProperty ;
+            rdfs:range :Biblioteca .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Agente
+:Agente rdf:type owl:Class .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Autor
+:Autor rdf:type owl:Class ;
+       rdfs:subClassOf :Pessoa .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Biblioteca
+:Biblioteca rdf:type owl:Class .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Bibliotecário
+:Bibliotecário rdf:type owl:Class ;
+               rdfs:subClassOf :Pessoa ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty :trabalhaEm ;
+                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                 owl:onClass :Biblioteca
+                               ] .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Empréstimo
+:Empréstimo rdf:type owl:Class .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Entidade_Temporal
+:Entidade_Temporal rdf:type owl:Class ;
+                   rdfs:subClassOf :Agente .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Evento
+:Evento rdf:type owl:Class .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/EventoFuturo
+:EventoFuturo rdf:type owl:Class ;
+              rdfs:subClassOf :Evento .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/EventoHistórico
+:EventoHistórico rdf:type owl:Class ;
+                 rdfs:subClassOf :Evento .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor
+:Leitor rdf:type owl:Class ;
+        rdfs:subClassOf :Pessoa .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/LinhaAlternativa
+:LinhaAlternativa rdf:type owl:Class ;
+                  rdfs:subClassOf :LinhaTemporal .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/LinhaOriginal
+:LinhaOriginal rdf:type owl:Class ;
+               rdfs:subClassOf :LinhaTemporal .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/LinhaTemporal
+:LinhaTemporal rdf:type owl:Class .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro
+:Livro rdf:type owl:Class ;
+       rdfs:subClassOf [ rdf:type owl:Restriction ;
+                         owl:onProperty :existemEm ;
+                         owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onClass :LinhaTemporal
+                       ] .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/LivroFiccional
+:LivroFiccional rdf:type owl:Class ;
+                rdfs:subClassOf :Livro ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty :refereA ;
+                                  owl:allValuesFrom [ rdf:type owl:Class ;
+                                                      owl:complementOf :EventoHistórico
+                                                    ]
+                                ] ;
+                owl:disjointWith :LivroHistórico .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/LivroHistórico
+:LivroHistórico rdf:type owl:Class ;
+                rdfs:subClassOf :Livro ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty :refereA ;
+                                  owl:allValuesFrom :EventoHistórico
+                                ] .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/LivroParadoxal
+:LivroParadoxal rdf:type owl:Class ;
+                rdfs:subClassOf :Livro ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty :existemEm ;
+                                  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                  owl:onClass :LinhaAlternativa
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty :existemEm ;
+                                  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                  owl:onClass :LinhaOriginal
+                                ] .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Pessoa
+:Pessoa rdf:type owl:Class ;
+        rdfs:subClassOf :Agente .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Arnaldo
+:Arnaldo rdf:type owl:NamedIndividual ,
+                  :Bibliotecário ;
+         :trabalhamEm :Biblioteca_Central_do_Tempo .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Arquivo_do_Vazio_Temporal
+:Arquivo_do_Vazio_Temporal rdf:type owl:NamedIndividual ,
+                                    :Biblioteca .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Aurelio
+:Aurelio rdf:type owl:NamedIndividual ,
+                  :Bibliotecário ;
+         :trabalhamEm :Cofre_do_Tempo_Perdido .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Autor_1
+:Autor_1 rdf:type owl:NamedIndividual ,
+                  :Autor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Autor_10
+:Autor_10 rdf:type owl:NamedIndividual ,
+                   :Autor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Autor_2
+:Autor_2 rdf:type owl:NamedIndividual ,
+                  :Autor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Autor_3
+:Autor_3 rdf:type owl:NamedIndividual ,
+                  :Autor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Autor_4
+:Autor_4 rdf:type owl:NamedIndividual ,
+                  :Autor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Autor_5
+:Autor_5 rdf:type owl:NamedIndividual ,
+                  :Autor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Autor_6
+:Autor_6 rdf:type owl:NamedIndividual ,
+                  :Autor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Autor_7
+:Autor_7 rdf:type owl:NamedIndividual ,
+                  :Autor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Autor_8
+:Autor_8 rdf:type owl:NamedIndividual ,
+                  :Autor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Autor_9
+:Autor_9 rdf:type owl:NamedIndividual ,
+                  :Autor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Autor_A
+:Autor_A rdf:type owl:NamedIndividual ,
+                  :Autor ;
+         :nome "Isaac Asimov II" .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Autor_B
+:Autor_B rdf:type owl:NamedIndividual ,
+                  :Autor ;
+         :nome "Ursula K. Le Guin II" .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Autor_C
+:Autor_C rdf:type owl:NamedIndividual ,
+                  :Autor ;
+         :nome "Philip K. Dick II" .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Autor_D
+:Autor_D rdf:type owl:NamedIndividual ,
+                  :Autor ;
+         :nome "Jorge Luis Borges II" .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Autor_E
+:Autor_E rdf:type owl:NamedIndividual ,
+                  :Autor ;
+         :nome "Octavia Butler II" .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Autor_F
+:Autor_F rdf:type owl:NamedIndividual ,
+                  :Autor ;
+         :nome "Italo Calvino II" .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Autor_G
+:Autor_G rdf:type owl:NamedIndividual ,
+                  :Autor ;
+         :nome "Stanislaw Lem II" .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Autor_H
+:Autor_H rdf:type owl:NamedIndividual ,
+                  :Autor ;
+         :nome "Margaret Atwood II" .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Autor_I
+:Autor_I rdf:type owl:NamedIndividual ,
+                  :Autor ;
+         :nome "Arthur C. Clarke II" .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Autor_J
+:Autor_J rdf:type owl:NamedIndividual ,
+                  :Autor ;
+         :nome "H.G. Wells II" .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Biblioteca_Central_do_Tempo
+:Biblioteca_Central_do_Tempo rdf:type owl:NamedIndividual ,
+                                      :Biblioteca .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Biblioteca_Entre_Ontem_e_Amanha
+:Biblioteca_Entre_Ontem_e_Amanha rdf:type owl:NamedIndividual ,
+                                          :Biblioteca .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Biblioteca_Infinita
+:Biblioteca_Infinita rdf:type owl:NamedIndividual ,
+                              :Biblioteca .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Boecio
+:Boecio rdf:type owl:NamedIndividual ,
+                 :Bibliotecário ;
+        :trabalhamEm :Biblioteca_Infinita .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Cassiodoro
+:Cassiodoro rdf:type owl:NamedIndividual ,
+                     :Bibliotecário ;
+            :trabalhamEm :Biblioteca_Infinita .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Clarice
+:Clarice rdf:type owl:NamedIndividual ,
+                  :Bibliotecário ;
+         :trabalhamEm :Arquivo_do_Vazio_Temporal .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Cofre_do_Tempo_Perdido
+:Cofre_do_Tempo_Perdido rdf:type owl:NamedIndividual ,
+                                 :Biblioteca .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Contato_Sirius
+:Contato_Sirius rdf:type owl:NamedIndividual ,
+                         :EventoFuturo .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Crise_das_Tulipas
+:Crise_das_Tulipas rdf:type owl:NamedIndividual ,
+                            :EventoHistórico .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Crise_de_1929
+:Crise_de_1929 rdf:type owl:NamedIndividual ,
+                        :EventoHistórico .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Cronos
+:Cronos rdf:type owl:NamedIndividual ,
+                 :Autor ,
+                 :Bibliotecário .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Cura_da_Mortalidade
+:Cura_da_Mortalidade rdf:type owl:NamedIndividual ,
+                              :EventoFuturo .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Dante_B
+:Dante_B rdf:type owl:NamedIndividual ,
+                  :Bibliotecário ;
+         :trabalhamEm :Biblioteca_Central_do_Tempo .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Descobrimento_da_America
+:Descobrimento_da_America rdf:type owl:NamedIndividual ,
+                                   :EventoHistórico .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Dominio_da_Energia_Livre
+:Dominio_da_Energia_Livre rdf:type owl:NamedIndividual ,
+                                   :EventoFuturo .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Eustachio
+:Eustachio rdf:type owl:NamedIndividual ,
+                    :Bibliotecário ;
+           :trabalhamEm :Arquivo_do_Vazio_Temporal .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Exploracao_Espacial
+:Exploracao_Espacial rdf:type owl:NamedIndividual ,
+                              :EventoHistórico .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Explosao_Solar_2100
+:Explosao_Solar_2100 rdf:type owl:NamedIndividual ,
+                              :EventoFuturo .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Extincao_Dino
+:Extincao_Dino rdf:type owl:NamedIndividual ,
+                        :EventoHistórico .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Extincao_da_Fome
+:Extincao_da_Fome rdf:type owl:NamedIndividual ,
+                           :EventoFuturo .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Fim_da_Escassez
+:Fim_da_Escassez rdf:type owl:NamedIndividual ,
+                          :EventoFuturo .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Guerra_dos_Nanobots
+:Guerra_dos_Nanobots rdf:type owl:NamedIndividual ,
+                              :EventoFuturo .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Hypatia_II
+:Hypatia_II rdf:type owl:NamedIndividual ,
+                     :Bibliotecário ;
+            :trabalhamEm :Torre_do_Conhecimento .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/IA_Autoconsfiente
+:IA_Autoconsfiente rdf:type owl:NamedIndividual ,
+                            :EventoFuturo .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_1
+:Leitor_1 rdf:type owl:NamedIndividual ,
+                   :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_10
+:Leitor_10 rdf:type owl:NamedIndividual ,
+                    :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_11
+:Leitor_11 rdf:type owl:NamedIndividual ,
+                    :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_12
+:Leitor_12 rdf:type owl:NamedIndividual ,
+                    :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_13
+:Leitor_13 rdf:type owl:NamedIndividual ,
+                    :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_14
+:Leitor_14 rdf:type owl:NamedIndividual ,
+                    :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_15
+:Leitor_15 rdf:type owl:NamedIndividual ,
+                    :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_2
+:Leitor_2 rdf:type owl:NamedIndividual ,
+                   :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_3
+:Leitor_3 rdf:type owl:NamedIndividual ,
+                   :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_4
+:Leitor_4 rdf:type owl:NamedIndividual ,
+                   :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_5
+:Leitor_5 rdf:type owl:NamedIndividual ,
+                   :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_6
+:Leitor_6 rdf:type owl:NamedIndividual ,
+                   :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_7
+:Leitor_7 rdf:type owl:NamedIndividual ,
+                   :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_8
+:Leitor_8 rdf:type owl:NamedIndividual ,
+                   :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_9
+:Leitor_9 rdf:type owl:NamedIndividual ,
+                   :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_Vip_1
+:Leitor_Vip_1 rdf:type owl:NamedIndividual ,
+                       :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_Vip_10
+:Leitor_Vip_10 rdf:type owl:NamedIndividual ,
+                        :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_Vip_11
+:Leitor_Vip_11 rdf:type owl:NamedIndividual ,
+                        :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_Vip_12
+:Leitor_Vip_12 rdf:type owl:NamedIndividual ,
+                        :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_Vip_13
+:Leitor_Vip_13 rdf:type owl:NamedIndividual ,
+                        :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_Vip_14
+:Leitor_Vip_14 rdf:type owl:NamedIndividual ,
+                        :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_Vip_2
+:Leitor_Vip_2 rdf:type owl:NamedIndividual ,
+                       :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_Vip_3
+:Leitor_Vip_3 rdf:type owl:NamedIndividual ,
+                       :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_Vip_4
+:Leitor_Vip_4 rdf:type owl:NamedIndividual ,
+                       :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_Vip_5
+:Leitor_Vip_5 rdf:type owl:NamedIndividual ,
+                       :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_Vip_6
+:Leitor_Vip_6 rdf:type owl:NamedIndividual ,
+                       :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_Vip_7
+:Leitor_Vip_7 rdf:type owl:NamedIndividual ,
+                       :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_Vip_8
+:Leitor_Vip_8 rdf:type owl:NamedIndividual ,
+                       :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Leitor_Vip_9
+:Leitor_Vip_9 rdf:type owl:NamedIndividual ,
+                       :Leitor .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Linha_Alpha_0
+:Linha_Alpha_0 rdf:type owl:NamedIndividual ,
+                        :LinhaOriginal .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Linha_Alt_A
+:Linha_Alt_A rdf:type owl:NamedIndividual ,
+                      :LinhaAlternativa .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Linha_Alt_Omega
+:Linha_Alt_Omega rdf:type owl:NamedIndividual ,
+                          :LinhaAlternativa .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Linha_Alt_Recursiva
+:Linha_Alt_Recursiva rdf:type owl:NamedIndividual ,
+                              :LinhaAlternativa .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Linha_Beta_0
+:Linha_Beta_0 rdf:type owl:NamedIndividual ,
+                       :LinhaOriginal .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Linha_Delta_Alt
+:Linha_Delta_Alt rdf:type owl:NamedIndividual ,
+                          :LinhaAlternativa .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Linha_Epsilon_Alt
+:Linha_Epsilon_Alt rdf:type owl:NamedIndividual ,
+                            :LinhaAlternativa .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Linha_Gama_Alt
+:Linha_Gama_Alt rdf:type owl:NamedIndividual ,
+                         :LinhaAlternativa .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Linha_Original_00
+:Linha_Original_00 rdf:type owl:NamedIndividual ,
+                            :LinhaOriginal .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Linha_Original_Prime
+:Linha_Original_Prime rdf:type owl:NamedIndividual ,
+                               :LinhaOriginal .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Linha_T0
+:Linha_T0 rdf:type owl:NamedIndividual ,
+                   :LinhaOriginal .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Linha_T1
+:Linha_T1 rdf:type owl:NamedIndividual ,
+                   :LinhaAlternativa .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_001
+:Livro_001 rdf:type owl:NamedIndividual ,
+                    :LivroParadoxal ;
+           :existemEm :Linha_Alt_Omega ,
+                      :Linha_Original_00 ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_10 ;
+           :refereEvento :Queda_do_Muro .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_002
+:Livro_002 rdf:type owl:NamedIndividual ,
+                    :LivroParadoxal ;
+           :existemEm :Linha_Alt_A ,
+                      :Linha_Original_Prime ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_4 ;
+           :refereEvento :Queda_do_Muro .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_003
+:Livro_003 rdf:type owl:NamedIndividual ,
+                    :LivroFiccional ;
+           :existemEm :Linha_Alt_A ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_4 ;
+           :refereEvento :Nascimento_da_IA .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_004
+:Livro_004 rdf:type owl:NamedIndividual ,
+                    :LivroHistórico ;
+           :existemEm :Linha_Original_Prime ;
+           :pertencemA :Biblioteca_Central_do_Tempo ;
+           :sãoEscritosPor :Autor_5 ;
+           :refereEvento :Descobrimento_da_America .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_005
+:Livro_005 rdf:type owl:NamedIndividual ,
+                    :LivroFiccional ;
+           :existemEm :Linha_Alt_Recursiva ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_10 ;
+           :refereEvento :Explosao_Solar_2100 .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_006
+:Livro_006 rdf:type owl:NamedIndividual ,
+                    :LivroFiccional ;
+           :existemEm :Linha_Alt_A ;
+           :pertencemA :Biblioteca_Central_do_Tempo ;
+           :sãoEscritosPor :Autor_9 ;
+           :refereEvento :Explosao_Solar_2100 .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_007
+:Livro_007 rdf:type owl:NamedIndividual ,
+                    :LivroParadoxal ;
+           :existemEm :Linha_Alt_A ,
+                      :Linha_Original_00 ;
+           :pertencemA :Biblioteca_Central_do_Tempo ;
+           :sãoEscritosPor :Autor_5 ;
+           :refereEvento :Queda_do_Muro .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_008
+:Livro_008 rdf:type owl:NamedIndividual ,
+                    :LivroFiccional ;
+           :existemEm :Linha_Alt_A ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_4 ;
+           :refereEvento :Extincao_da_Fome .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_009
+:Livro_009 rdf:type owl:NamedIndividual ,
+                    :LivroParadoxal ;
+           :existemEm :Linha_Alt_Recursiva ,
+                      :Linha_Original_Prime ;
+           :pertencemA :Biblioteca_Central_do_Tempo ;
+           :sãoEscritosPor :Autor_2 ;
+           :refereEvento :Explosao_Solar_2100 .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_010
+:Livro_010 rdf:type owl:NamedIndividual ,
+                    :LivroFiccional ;
+           :existemEm :Linha_Alt_Recursiva ;
+           :pertencemA :Biblioteca_Central_do_Tempo ;
+           :sãoEscritosPor :Autor_10 ;
+           :refereEvento :Nascimento_da_IA .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_011
+:Livro_011 rdf:type owl:NamedIndividual ,
+                    :LivroHistórico ;
+           :existemEm :Linha_Original_Prime ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_6 ;
+           :refereEvento :Revolucao_Industrial .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_012
+:Livro_012 rdf:type owl:NamedIndividual ,
+                    :LivroFiccional ;
+           :existemEm :Linha_Alt_A ;
+           :pertencemA :Biblioteca_Central_do_Tempo ;
+           :sãoEscritosPor :Autor_9 ;
+           :refereEvento :Explosao_Solar_2100 .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_013
+:Livro_013 rdf:type owl:NamedIndividual ,
+                    :LivroParadoxal ;
+           :existemEm :Linha_Alt_Recursiva ,
+                      :Linha_Original_Prime ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_9 ;
+           :refereEvento :Guerra_dos_Nanobots .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_014
+:Livro_014 rdf:type owl:NamedIndividual ,
+                    :LivroParadoxal ;
+           :existemEm :Linha_Alt_Omega ,
+                      :Linha_Original_Prime ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_3 ;
+           :refereEvento :Crise_de_1929 .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_015
+:Livro_015 rdf:type owl:NamedIndividual ,
+                    :LivroParadoxal ;
+           :existemEm :Linha_Alt_A ,
+                      :Linha_Original_00 ;
+           :pertencemA :Biblioteca_Central_do_Tempo ;
+           :sãoEscritosPor :Autor_10 ;
+           :refereEvento :Queda_do_Muro .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_016
+:Livro_016 rdf:type owl:NamedIndividual ,
+                    :LivroParadoxal ;
+           :existemEm :Linha_Alt_Recursiva ,
+                      :Linha_Original_Prime ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_2 ;
+           :refereEvento :Explosao_Solar_2100 .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_017
+:Livro_017 rdf:type owl:NamedIndividual ,
+                    :LivroFiccional ;
+           :existemEm :Linha_Alt_A ;
+           :pertencemA :Biblioteca_Central_do_Tempo ;
+           :sãoEscritosPor :Autor_7 ;
+           :refereEvento :Guerra_dos_Nanobots .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_018
+:Livro_018 rdf:type owl:NamedIndividual ,
+                    :LivroHistórico ;
+           :existemEm :Linha_Original_00 ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_9 ;
+           :refereEvento :Crise_de_1929 .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_019
+:Livro_019 rdf:type owl:NamedIndividual ,
+                    :LivroFiccional ;
+           :existemEm :Linha_Alt_A ;
+           :pertencemA :Biblioteca_Central_do_Tempo ;
+           :sãoEscritosPor :Autor_1 ;
+           :refereEvento :Explosao_Solar_2100 .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_020
+:Livro_020 rdf:type owl:NamedIndividual ,
+                    :LivroFiccional ;
+           :existemEm :Linha_Alt_Recursiva ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_5 ;
+           :refereEvento :Nascimento_da_IA .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_021
+:Livro_021 rdf:type owl:NamedIndividual ,
+                    :LivroHistórico ;
+           :existemEm :Linha_Original_Prime ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_7 ;
+           :refereEvento :Revolucao_Industrial .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_022
+:Livro_022 rdf:type owl:NamedIndividual ,
+                    :LivroFiccional ;
+           :existemEm :Linha_Alt_A ;
+           :pertencemA :Biblioteca_Central_do_Tempo ;
+           :sãoEscritosPor :Autor_9 ;
+           :refereEvento :Nascimento_da_IA .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_023
+:Livro_023 rdf:type owl:NamedIndividual ,
+                    :LivroParadoxal ;
+           :existemEm :Linha_Alt_A ,
+                      :Linha_Original_Prime ;
+           :pertencemA :Biblioteca_Central_do_Tempo ;
+           :sãoEscritosPor :Autor_8 ;
+           :refereEvento :Explosao_Solar_2100 .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_024
+:Livro_024 rdf:type owl:NamedIndividual ,
+                    :LivroHistórico ;
+           :existemEm :Linha_Original_Prime ;
+           :pertencemA :Biblioteca_Central_do_Tempo ;
+           :sãoEscritosPor :Autor_2 ;
+           :refereEvento :Revolucao_Industrial .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_025
+:Livro_025 rdf:type owl:NamedIndividual ,
+                    :LivroParadoxal ;
+           :existemEm :Linha_Alt_Omega ,
+                      :Linha_Original_Prime ;
+           :pertencemA :Biblioteca_Central_do_Tempo ;
+           :sãoEscritosPor :Autor_5 ;
+           :refereEvento :Revolucao_Industrial .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_026
+:Livro_026 rdf:type owl:NamedIndividual ,
+                    :LivroHistórico ;
+           :existemEm :Linha_Original_Prime ;
+           :pertencemA :Biblioteca_Central_do_Tempo ;
+           :sãoEscritosPor :Autor_5 ;
+           :refereEvento :Descobrimento_da_America .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_027
+:Livro_027 rdf:type owl:NamedIndividual ,
+                    :LivroHistórico ;
+           :existemEm :Linha_Original_00 ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_6 ;
+           :refereEvento :Queda_do_Muro .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_028
+:Livro_028 rdf:type owl:NamedIndividual ,
+                    :LivroHistórico ;
+           :existemEm :Linha_Original_Prime ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_4 ;
+           :refereEvento :Queda_do_Muro .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_029
+:Livro_029 rdf:type owl:NamedIndividual ,
+                    :LivroFiccional ;
+           :existemEm :Linha_Alt_A ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_7 ;
+           :refereEvento :Guerra_dos_Nanobots .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_030
+:Livro_030 rdf:type owl:NamedIndividual ,
+                    :LivroFiccional ;
+           :existemEm :Linha_Alt_Omega ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_1 ;
+           :refereEvento :Contato_Sirius .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_031
+:Livro_031 rdf:type owl:NamedIndividual ,
+                    :LivroParadoxal ;
+           :existemEm :Linha_Alt_Omega ,
+                      :Linha_Original_00 ;
+           :pertencemA :Biblioteca_Central_do_Tempo ;
+           :sãoEscritosPor :Autor_2 ;
+           :refereEvento :Crise_de_1929 .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_032
+:Livro_032 rdf:type owl:NamedIndividual ,
+                    :LivroHistórico ;
+           :existemEm :Linha_Original_00 ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_8 ;
+           :refereEvento :Revolucao_Industrial .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_033
+:Livro_033 rdf:type owl:NamedIndividual ,
+                    :LivroFiccional ;
+           :existemEm :Linha_Alt_A ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_9 ;
+           :refereEvento :Guerra_dos_Nanobots .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_034
+:Livro_034 rdf:type owl:NamedIndividual ,
+                    :LivroParadoxal ;
+           :existemEm :Linha_Alt_A ,
+                      :Linha_Original_00 ;
+           :pertencemA :Biblioteca_Central_do_Tempo ;
+           :sãoEscritosPor :Autor_9 ;
+           :refereEvento :Crise_de_1929 .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_035
+:Livro_035 rdf:type owl:NamedIndividual ,
+                    :LivroHistórico ;
+           :existemEm :Linha_Original_00 ;
+           :pertencemA :Biblioteca_Central_do_Tempo ;
+           :sãoEscritosPor :Autor_2 ;
+           :refereEvento :Crise_de_1929 .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_036
+:Livro_036 rdf:type owl:NamedIndividual ,
+                    :LivroParadoxal ;
+           :existemEm :Linha_Alt_Recursiva ,
+                      :Linha_Original_00 ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_7 ;
+           :refereEvento :Guerra_dos_Nanobots .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_037
+:Livro_037 rdf:type owl:NamedIndividual ,
+                    :LivroParadoxal ;
+           :existemEm :Linha_Alt_A ,
+                      :Linha_Original_00 ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_6 ;
+           :refereEvento :Extincao_da_Fome .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_038
+:Livro_038 rdf:type owl:NamedIndividual ,
+                    :LivroFiccional ;
+           :existemEm :Linha_Alt_Recursiva ;
+           :pertencemA :Biblioteca_Central_do_Tempo ;
+           :sãoEscritosPor :Autor_3 ;
+           :refereEvento :Explosao_Solar_2100 .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_039
+:Livro_039 rdf:type owl:NamedIndividual ,
+                    :LivroParadoxal ;
+           :existemEm :Linha_Alt_A ,
+                      :Linha_Original_00 ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_2 ;
+           :refereEvento :Extincao_da_Fome .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_040
+:Livro_040 rdf:type owl:NamedIndividual ,
+                    :LivroFiccional ;
+           :existemEm :Linha_Alt_A ;
+           :pertencemA :Biblioteca_Central_do_Tempo ;
+           :sãoEscritosPor :Autor_3 ;
+           :refereEvento :Guerra_dos_Nanobots .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_041
+:Livro_041 rdf:type owl:NamedIndividual ,
+                    :LivroHistórico ;
+           :existemEm :Linha_Original_00 ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_2 ;
+           :refereEvento :Descobrimento_da_America .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_042
+:Livro_042 rdf:type owl:NamedIndividual ,
+                    :LivroHistórico ;
+           :existemEm :Linha_Original_00 ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_2 ;
+           :refereEvento :Crise_de_1929 .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_043
+:Livro_043 rdf:type owl:NamedIndividual ,
+                    :LivroParadoxal ;
+           :existemEm :Linha_Alt_Omega ,
+                      :Linha_Original_Prime ;
+           :pertencemA :Biblioteca_Central_do_Tempo ;
+           :sãoEscritosPor :Autor_1 ;
+           :refereEvento :Contato_Sirius .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_044
+:Livro_044 rdf:type owl:NamedIndividual ,
+                    :LivroFiccional ;
+           :existemEm :Linha_Alt_A ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_7 ;
+           :refereEvento :Guerra_dos_Nanobots .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_045
+:Livro_045 rdf:type owl:NamedIndividual ,
+                    :LivroHistórico ;
+           :existemEm :Linha_Original_Prime ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_8 ;
+           :refereEvento :Revolucao_Industrial .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_046
+:Livro_046 rdf:type owl:NamedIndividual ,
+                    :LivroFiccional ;
+           :existemEm :Linha_Alt_Recursiva ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_6 ;
+           :refereEvento :Contato_Sirius .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_047
+:Livro_047 rdf:type owl:NamedIndividual ,
+                    :LivroHistórico ;
+           :existemEm :Linha_Original_00 ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_1 ;
+           :refereEvento :Descobrimento_da_America .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_048
+:Livro_048 rdf:type owl:NamedIndividual ,
+                    :LivroParadoxal ;
+           :existemEm :Linha_Alt_Recursiva ,
+                      :Linha_Original_00 ;
+           :pertencemA :Biblioteca_Central_do_Tempo ;
+           :sãoEscritosPor :Autor_4 ;
+           :refereEvento :Extincao_da_Fome .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_049
+:Livro_049 rdf:type owl:NamedIndividual ,
+                    :LivroFiccional ;
+           :existemEm :Linha_Alt_A ;
+           :pertencemA :Biblioteca_Central_do_Tempo ;
+           :sãoEscritosPor :Autor_7 ;
+           :refereEvento :Extincao_da_Fome .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_050
+:Livro_050 rdf:type owl:NamedIndividual ,
+                    :LivroParadoxal ;
+           :existemEm :Linha_Alt_A ,
+                      :Linha_Original_00 ;
+           :pertencemA :Biblioteca_Central_do_Tempo ;
+           :sãoEscritosPor :Autor_9 ;
+           :refereEvento :Descobrimento_da_America .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_051
+:Livro_051 rdf:type owl:NamedIndividual ,
+                    :LivroHistórico ;
+           :existemEm :Linha_Original_Prime ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_2 ;
+           :refereEvento :Primeiro_Voo .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_052
+:Livro_052 rdf:type owl:NamedIndividual ,
+                    :LivroParadoxal ;
+           :existemEm :Linha_Alt_A ,
+                      :Linha_Original_00 ;
+           :pertencemA :Arquivo_do_Vazio_Temporal ;
+           :sãoEscritosPor :Autor_3 ;
+           :refereEvento :Guerra_dos_Nanobots .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_053
+:Livro_053 rdf:type owl:NamedIndividual ,
+                    :LivroFiccional ;
+           :existemEm :Linha_Alt_Omega ;
+           :pertencemA :Biblioteca_Central_do_Tempo ;
+           :sãoEscritosPor :Autor_2 ;
+           :refereEvento :Guerra_dos_Nanobots .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_001
+:Livro_Temporal_001 rdf:type owl:NamedIndividual ,
+                             :LivroHistórico ;
+                    :existemEm :Linha_Beta_0 ;
+                    :pertencemA :Torre_do_Conhecimento ;
+                    :sãoEscritosPor :Autor_F ;
+                    :refereEvento :Pax_Romana .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_002
+:Livro_Temporal_002 rdf:type owl:NamedIndividual ,
+                             :LivroHistórico ;
+                    :existemEm :Linha_Alpha_0 ;
+                    :pertencemA :Biblioteca_Infinita ;
+                    :sãoEscritosPor :Autor_D ;
+                    :refereEvento :Nascimento_do_Sol .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_003
+:Livro_Temporal_003 rdf:type owl:NamedIndividual ,
+                             :LivroParadoxal ;
+                    :existemEm :Linha_Alpha_0 ,
+                               :Linha_Delta_Alt ;
+                    :pertencemA :Biblioteca_Infinita ;
+                    :sãoEscritosPor :Autor_I ;
+                    :refereEvento :Renascimento .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_004
+:Livro_Temporal_004 rdf:type owl:NamedIndividual ,
+                             :LivroHistórico ;
+                    :existemEm :Linha_Alpha_0 ;
+                    :pertencemA :Torre_do_Conhecimento ;
+                    :sãoEscritosPor :Autor_H ;
+                    :refereEvento :Crise_das_Tulipas .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_005
+:Livro_Temporal_005 rdf:type owl:NamedIndividual ,
+                             :LivroParadoxal ;
+                    :existemEm :Linha_Beta_0 ,
+                               :Linha_Gama_Alt ;
+                    :pertencemA :Biblioteca_Infinita ;
+                    :sãoEscritosPor :Autor_A ;
+                    :refereEvento :Exploracao_Espacial .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_006
+:Livro_Temporal_006 rdf:type owl:NamedIndividual ,
+                             :LivroHistórico ;
+                    :existemEm :Linha_Beta_0 ;
+                    :pertencemA :Biblioteca_Infinita ;
+                    :sãoEscritosPor :Autor_J ;
+                    :refereEvento :Extincao_Dino .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_007
+:Livro_Temporal_007 rdf:type owl:NamedIndividual ,
+                             :LivroParadoxal ;
+                    :existemEm :Linha_Alpha_0 ,
+                               :Linha_Delta_Alt ;
+                    :pertencemA :Cofre_do_Tempo_Perdido ;
+                    :sãoEscritosPor :Autor_F ;
+                    :refereEvento :Nascimento_do_Sol .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_008
+:Livro_Temporal_008 rdf:type owl:NamedIndividual ,
+                             :LivroParadoxal ;
+                    :existemEm :Linha_Alpha_0 ,
+                               :Linha_Epsilon_Alt ;
+                    :pertencemA :Cofre_do_Tempo_Perdido ;
+                    :sãoEscritosPor :Autor_E ;
+                    :refereEvento :Nascimento_do_Sol .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_009
+:Livro_Temporal_009 rdf:type owl:NamedIndividual ,
+                             :LivroFiccional ;
+                    :existemEm :Linha_Epsilon_Alt ;
+                    :pertencemA :Torre_do_Conhecimento ;
+                    :sãoEscritosPor :Autor_J ;
+                    :refereEvento :Viagem_Intergalactica .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_010
+:Livro_Temporal_010 rdf:type owl:NamedIndividual ,
+                             :LivroFiccional ;
+                    :existemEm :Linha_Epsilon_Alt ;
+                    :pertencemA :Cofre_do_Tempo_Perdido ;
+                    :sãoEscritosPor :Autor_E ;
+                    :refereEvento :Viagem_Intergalactica .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_011
+:Livro_Temporal_011 rdf:type owl:NamedIndividual ,
+                             :LivroParadoxal ;
+                    :existemEm :Linha_Alpha_0 ,
+                               :Linha_Delta_Alt ;
+                    :pertencemA :Biblioteca_Infinita ;
+                    :sãoEscritosPor :Autor_A ;
+                    :refereEvento :Extincao_Dino .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_012
+:Livro_Temporal_012 rdf:type owl:NamedIndividual ,
+                             :LivroHistórico ;
+                    :existemEm :Linha_Beta_0 ;
+                    :pertencemA :Torre_do_Conhecimento ;
+                    :sãoEscritosPor :Autor_J ;
+                    :refereEvento :Nascimento_do_Sol .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_013
+:Livro_Temporal_013 rdf:type owl:NamedIndividual ,
+                             :LivroParadoxal ;
+                    :existemEm :Linha_Beta_0 ,
+                               :Linha_Delta_Alt ;
+                    :pertencemA :Cofre_do_Tempo_Perdido ;
+                    :sãoEscritosPor :Autor_J ;
+                    :refereEvento :Pax_Romana .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_014
+:Livro_Temporal_014 rdf:type owl:NamedIndividual ,
+                             :LivroHistórico ;
+                    :existemEm :Linha_Alpha_0 ;
+                    :pertencemA :Torre_do_Conhecimento ;
+                    :sãoEscritosPor :Autor_G ;
+                    :refereEvento :Extincao_Dino .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_015
+:Livro_Temporal_015 rdf:type owl:NamedIndividual ,
+                             :LivroParadoxal ;
+                    :existemEm :Linha_Beta_0 ,
+                               :Linha_Gama_Alt ;
+                    :pertencemA :Cofre_do_Tempo_Perdido ;
+                    :sãoEscritosPor :Autor_A ;
+                    :refereEvento :Fim_da_Escassez .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_016
+:Livro_Temporal_016 rdf:type owl:NamedIndividual ,
+                             :LivroFiccional ;
+                    :existemEm :Linha_Gama_Alt ;
+                    :pertencemA :Torre_do_Conhecimento ;
+                    :sãoEscritosPor :Autor_E ;
+                    :refereEvento :Viagem_Intergalactica .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_017
+:Livro_Temporal_017 rdf:type owl:NamedIndividual ,
+                             :LivroFiccional ;
+                    :existemEm :Linha_Gama_Alt ;
+                    :pertencemA :Cofre_do_Tempo_Perdido ;
+                    :sãoEscritosPor :Autor_B ;
+                    :refereEvento :Cura_da_Mortalidade .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_018
+:Livro_Temporal_018 rdf:type owl:NamedIndividual ,
+                             :LivroParadoxal ;
+                    :existemEm :Linha_Alpha_0 ,
+                               :Linha_Delta_Alt ;
+                    :pertencemA :Torre_do_Conhecimento ;
+                    :sãoEscritosPor :Autor_F ;
+                    :refereEvento :Viagem_Intergalactica .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_019
+:Livro_Temporal_019 rdf:type owl:NamedIndividual ,
+                             :LivroParadoxal ;
+                    :existemEm :Linha_Alpha_0 ,
+                               :Linha_Epsilon_Alt ;
+                    :pertencemA :Biblioteca_Infinita ;
+                    :sãoEscritosPor :Autor_H ;
+                    :refereEvento :Cura_da_Mortalidade .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_020
+:Livro_Temporal_020 rdf:type owl:NamedIndividual ,
+                             :LivroHistórico ;
+                    :existemEm :Linha_Beta_0 ;
+                    :pertencemA :Cofre_do_Tempo_Perdido ;
+                    :sãoEscritosPor :Autor_D ;
+                    :refereEvento :Exploracao_Espacial .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_021
+:Livro_Temporal_021 rdf:type owl:NamedIndividual ,
+                             :LivroFiccional ;
+                    :existemEm :Linha_Delta_Alt ;
+                    :pertencemA :Torre_do_Conhecimento ;
+                    :sãoEscritosPor :Autor_D ;
+                    :refereEvento :Fim_da_Escassez .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_022
+:Livro_Temporal_022 rdf:type owl:NamedIndividual ,
+                             :LivroHistórico ;
+                    :existemEm :Linha_Beta_0 ;
+                    :pertencemA :Biblioteca_Infinita ;
+                    :sãoEscritosPor :Autor_D ;
+                    :refereEvento :Nascimento_do_Sol .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_023
+:Livro_Temporal_023 rdf:type owl:NamedIndividual ,
+                             :LivroHistórico ;
+                    :existemEm :Linha_Alpha_0 ;
+                    :pertencemA :Cofre_do_Tempo_Perdido ;
+                    :sãoEscritosPor :Autor_A ;
+                    :refereEvento :Extincao_Dino .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_024
+:Livro_Temporal_024 rdf:type owl:NamedIndividual ,
+                             :LivroHistórico ;
+                    :existemEm :Linha_Alpha_0 ;
+                    :pertencemA :Torre_do_Conhecimento ;
+                    :sãoEscritosPor :Autor_A ;
+                    :refereEvento :Renascimento .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_025
+:Livro_Temporal_025 rdf:type owl:NamedIndividual ,
+                             :LivroHistórico ;
+                    :existemEm :Linha_Beta_0 ;
+                    :pertencemA :Torre_do_Conhecimento ;
+                    :sãoEscritosPor :Autor_G ;
+                    :refereEvento :Crise_das_Tulipas .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_026
+:Livro_Temporal_026 rdf:type owl:NamedIndividual ,
+                             :LivroParadoxal ;
+                    :existemEm :Linha_Alpha_0 ,
+                               :Linha_Gama_Alt ;
+                    :pertencemA :Cofre_do_Tempo_Perdido ;
+                    :sãoEscritosPor :Autor_C ;
+                    :refereEvento :Extincao_Dino .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_027
+:Livro_Temporal_027 rdf:type owl:NamedIndividual ,
+                             :LivroHistórico ;
+                    :existemEm :Linha_Beta_0 ;
+                    :pertencemA :Cofre_do_Tempo_Perdido ;
+                    :sãoEscritosPor :Autor_F ;
+                    :refereEvento :Crise_das_Tulipas .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_028
+:Livro_Temporal_028 rdf:type owl:NamedIndividual ,
+                             :LivroHistórico ;
+                    :existemEm :Linha_Alpha_0 ;
+                    :pertencemA :Torre_do_Conhecimento ;
+                    :sãoEscritosPor :Autor_E ;
+                    :refereEvento :Crise_das_Tulipas .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_029
+:Livro_Temporal_029 rdf:type owl:NamedIndividual ,
+                             :LivroParadoxal ;
+                    :existemEm :Linha_Beta_0 ,
+                               :Linha_Delta_Alt ;
+                    :pertencemA :Cofre_do_Tempo_Perdido ;
+                    :sãoEscritosPor :Autor_F ;
+                    :refereEvento :Pax_Romana .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_030
+:Livro_Temporal_030 rdf:type owl:NamedIndividual ,
+                             :LivroParadoxal ;
+                    :existemEm :Linha_Beta_0 ,
+                               :Linha_Gama_Alt ;
+                    :pertencemA :Biblioteca_Infinita ;
+                    :sãoEscritosPor :Autor_A ;
+                    :refereEvento :Viagem_Intergalactica .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_031
+:Livro_Temporal_031 rdf:type owl:NamedIndividual ,
+                             :LivroHistórico ;
+                    :existemEm :Linha_Alpha_0 ;
+                    :pertencemA :Biblioteca_Infinita ;
+                    :sãoEscritosPor :Autor_I ;
+                    :refereEvento :Pax_Romana .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_032
+:Livro_Temporal_032 rdf:type owl:NamedIndividual ,
+                             :LivroHistórico ;
+                    :existemEm :Linha_Alpha_0 ;
+                    :pertencemA :Cofre_do_Tempo_Perdido ;
+                    :sãoEscritosPor :Autor_F ;
+                    :refereEvento :Crise_das_Tulipas .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_033
+:Livro_Temporal_033 rdf:type owl:NamedIndividual ,
+                             :LivroFiccional ;
+                    :existemEm :Linha_Delta_Alt ;
+                    :pertencemA :Cofre_do_Tempo_Perdido ;
+                    :sãoEscritosPor :Autor_I ;
+                    :refereEvento :Primeira_Cidade_Submarina .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_034
+:Livro_Temporal_034 rdf:type owl:NamedIndividual ,
+                             :LivroFiccional ;
+                    :existemEm :Linha_Delta_Alt ;
+                    :pertencemA :Torre_do_Conhecimento ;
+                    :sãoEscritosPor :Autor_H ;
+                    :refereEvento :Fim_da_Escassez .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_035
+:Livro_Temporal_035 rdf:type owl:NamedIndividual ,
+                             :LivroFiccional ;
+                    :existemEm :Linha_Delta_Alt ;
+                    :pertencemA :Torre_do_Conhecimento ;
+                    :sãoEscritosPor :Autor_B ;
+                    :refereEvento :Viagem_Intergalactica .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_036
+:Livro_Temporal_036 rdf:type owl:NamedIndividual ,
+                             :LivroHistórico ;
+                    :existemEm :Linha_Beta_0 ;
+                    :pertencemA :Biblioteca_Infinita ;
+                    :sãoEscritosPor :Autor_I ;
+                    :refereEvento :Nascimento_do_Sol .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_037
+:Livro_Temporal_037 rdf:type owl:NamedIndividual ,
+                             :LivroParadoxal ;
+                    :existemEm :Linha_Beta_0 ,
+                               :Linha_Delta_Alt ;
+                    :pertencemA :Cofre_do_Tempo_Perdido ;
+                    :sãoEscritosPor :Autor_B ;
+                    :refereEvento :Extincao_Dino .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_038
+:Livro_Temporal_038 rdf:type owl:NamedIndividual ,
+                             :LivroParadoxal ;
+                    :existemEm :Linha_Alpha_0 ,
+                               :Linha_Delta_Alt ;
+                    :pertencemA :Torre_do_Conhecimento ;
+                    :sãoEscritosPor :Autor_E ;
+                    :refereEvento :Exploracao_Espacial .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_039
+:Livro_Temporal_039 rdf:type owl:NamedIndividual ,
+                             :LivroFiccional ;
+                    :existemEm :Linha_Epsilon_Alt ;
+                    :pertencemA :Cofre_do_Tempo_Perdido ;
+                    :sãoEscritosPor :Autor_E ;
+                    :refereEvento :Primeira_Cidade_Submarina .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_040
+:Livro_Temporal_040 rdf:type owl:NamedIndividual ,
+                             :LivroParadoxal ;
+                    :existemEm :Linha_Beta_0 ,
+                               :Linha_Gama_Alt ;
+                    :pertencemA :Biblioteca_Infinita ;
+                    :sãoEscritosPor :Autor_A ;
+                    :refereEvento :Nascimento_do_Sol .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_041
+:Livro_Temporal_041 rdf:type owl:NamedIndividual ,
+                             :LivroParadoxal ;
+                    :existemEm :Linha_Beta_0 ,
+                               :Linha_Epsilon_Alt ;
+                    :pertencemA :Cofre_do_Tempo_Perdido ;
+                    :sãoEscritosPor :Autor_C ;
+                    :refereEvento :Cura_da_Mortalidade .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_042
+:Livro_Temporal_042 rdf:type owl:NamedIndividual ,
+                             :LivroFiccional ;
+                    :existemEm :Linha_Epsilon_Alt ;
+                    :pertencemA :Biblioteca_Infinita ;
+                    :sãoEscritosPor :Autor_E ;
+                    :refereEvento :Dominio_da_Energia_Livre .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_043
+:Livro_Temporal_043 rdf:type owl:NamedIndividual ,
+                             :LivroParadoxal ;
+                    :existemEm :Linha_Beta_0 ,
+                               :Linha_Epsilon_Alt ;
+                    :pertencemA :Cofre_do_Tempo_Perdido ;
+                    :sãoEscritosPor :Autor_C ;
+                    :refereEvento :Viagem_Intergalactica .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_044
+:Livro_Temporal_044 rdf:type owl:NamedIndividual ,
+                             :LivroFiccional ;
+                    :existemEm :Linha_Gama_Alt ;
+                    :pertencemA :Cofre_do_Tempo_Perdido ;
+                    :sãoEscritosPor :Autor_B ;
+                    :refereEvento :IA_Autoconsfiente .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_045
+:Livro_Temporal_045 rdf:type owl:NamedIndividual ,
+                             :LivroParadoxal ;
+                    :existemEm :Linha_Beta_0 ,
+                               :Linha_Epsilon_Alt ;
+                    :pertencemA :Biblioteca_Infinita ;
+                    :sãoEscritosPor :Autor_G ;
+                    :refereEvento :IA_Autoconsfiente .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_046
+:Livro_Temporal_046 rdf:type owl:NamedIndividual ,
+                             :LivroFiccional ;
+                    :existemEm :Linha_Delta_Alt ;
+                    :pertencemA :Torre_do_Conhecimento ;
+                    :sãoEscritosPor :Autor_C ;
+                    :refereEvento :Cura_da_Mortalidade .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_047
+:Livro_Temporal_047 rdf:type owl:NamedIndividual ,
+                             :LivroParadoxal ;
+                    :existemEm :Linha_Beta_0 ,
+                               :Linha_Gama_Alt ;
+                    :pertencemA :Cofre_do_Tempo_Perdido ;
+                    :sãoEscritosPor :Autor_H ;
+                    :refereEvento :Exploracao_Espacial .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_048
+:Livro_Temporal_048 rdf:type owl:NamedIndividual ,
+                             :LivroFiccional ;
+                    :existemEm :Linha_Epsilon_Alt ;
+                    :pertencemA :Torre_do_Conhecimento ;
+                    :sãoEscritosPor :Autor_E ;
+                    :refereEvento :Viagem_Intergalactica .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_049
+:Livro_Temporal_049 rdf:type owl:NamedIndividual ,
+                             :LivroFiccional ;
+                    :existemEm :Linha_Delta_Alt ;
+                    :pertencemA :Biblioteca_Infinita ;
+                    :sãoEscritosPor :Autor_J ;
+                    :refereEvento :Viagem_Intergalactica .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Livro_Temporal_050
+:Livro_Temporal_050 rdf:type owl:NamedIndividual ,
+                             :LivroParadoxal ;
+                    :existemEm :Linha_Alpha_0 ,
+                               :Linha_Delta_Alt ;
+                    :pertencemA :Torre_do_Conhecimento ;
+                    :sãoEscritosPor :Autor_J ;
+                    :refereEvento :Pax_Romana .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Nascimento_da_IA
+:Nascimento_da_IA rdf:type owl:NamedIndividual ,
+                           :EventoFuturo .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Nascimento_do_Sol
+:Nascimento_do_Sol rdf:type owl:NamedIndividual ,
+                            :EventoHistórico .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Pax_Romana
+:Pax_Romana rdf:type owl:NamedIndividual ,
+                     :EventoHistórico .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Primeira_Cidade_Submarina
+:Primeira_Cidade_Submarina rdf:type owl:NamedIndividual ,
+                                    :EventoFuturo .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Primeiro_Voo
+:Primeiro_Voo rdf:type owl:NamedIndividual ,
+                       :EventoHistórico .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Ptolomeu_X
+:Ptolomeu_X rdf:type owl:NamedIndividual ,
+                     :Bibliotecário ;
+            :trabalhamEm :Biblioteca_Infinita .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Queda_do_Muro
+:Queda_do_Muro rdf:type owl:NamedIndividual ,
+                        :EventoHistórico .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Renascimento
+:Renascimento rdf:type owl:NamedIndividual ,
+                       :EventoHistórico .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Revolucao_Industrial
+:Revolucao_Industrial rdf:type owl:NamedIndividual ,
+                               :EventoHistórico .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Sibilina
+:Sibilina rdf:type owl:NamedIndividual ,
+                   :Bibliotecário ;
+          :trabalhamEm :Biblioteca_Central_do_Tempo .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Torre_do_Conhecimento
+:Torre_do_Conhecimento rdf:type owl:NamedIndividual ,
+                                :Biblioteca .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Viagem_Intergalactica
+:Viagem_Intergalactica rdf:type owl:NamedIndividual ,
+                                :EventoFuturo .
+
+
+###  http://rpcw.di.uminho.pt/2026/untitled-ontology-32/Zeno
+:Zeno rdf:type owl:NamedIndividual ,
+               :Bibliotecário ;
+      :trabalhamEm :Biblioteca_Infinita .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi

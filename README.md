@@ -14,6 +14,7 @@ Este repositório contém todos os trabalhos práticos (TPCs) da UC Representaç
 - [TPC1](TPC1/README.md)  
 - [TPC2](TPC2/README.md)  
 - [TPC3](TPC3/README.md)  
+- [TPC4](TPC4/README.md)  
 
 > Cada link leva diretamente ao manifesto (README.md) do respetivo TPC, onde estão descritos os objetivos, resumo e lista de resultados produzidos.
 
