@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ livro.titulo if livro else "Livro não encontrado" }}{% endblock %}
+
+{% block content %}
+<div class="w3-container w3-teal w3-padding-16">
+    <h2><i class="fa fa-book w3-margin-right"></i>{{ livro.titulo if livro else "Livro não encontrado" }}</h2>
+</div>
+
+{% if livro %}
+<div class="w3-container w3-padding-32">
+
+    <div class="w3-card-4 w3-white w3-padding-16 w3-margin-bottom">
+        <h3>Informação do Livro</h3>
+        <table class="w3-table w3-bordered">
+            <tr><td><b>ID</b></td><td>{{ livro.id }}</td></tr>
+            <tr><td><b>Título</b></td><td>{{ livro.titulo }}</td></tr>
+            <tr><td><b>Tipo</b></td><td>{{ livro.tipo }}</td></tr>
+            <tr><td><b>Autor</b></td><td>{{ livro.autor }}</td></tr>
+            <tr><td><b>País</b></td><td>{{ livro.pais }}</td></tr>
+            <tr>
+                <td><b>Linhas Temporais</b></td>
+                <td>
+                    {% if livro.linhas %}
+                        {% for linha in livro.linhas %}
+                            <span class="w3-tag w3-round w3-blue w3-margin-right">{{ linha }}</span>
+                        {% endfor %}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    {% if eventos %}
+    <div class="w3-card-4 w3-white w3-padding-16">
+        <h3>Eventos Referidos</h3>
+        <table class="w3-table-all w3-hoverable">
+            <thead>
+                <tr class="w3-light-blue">
+                    <th>ID</th>
+                    <th>Designação</th>
+                    <th>Descrição</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ev in eventos %}
+                <tr>
+                    <td>{{ ev.id }}</td>
+                    <td>{{ ev.designacao }}</td>
+                    <td>{{ ev.descricao }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="w3-panel w3-pale-yellow">
+        <p>Nenhum evento referido.</p>
+    </div>
+    {% endif %}
+
+</div>
+
+{% else %}
+<div class="w3-container w3-padding-32">
+    <div class="w3-panel w3-red">
+        <p>Livro não encontrado.</p>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
