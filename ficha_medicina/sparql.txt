@@ -1,0 +1,140 @@
+PREFIX : <http://www.example.org/disease-ontology#>
+
+
+1) Quantas doenças estão presentes na ontologia?
+------------------------------------------------
+Query:
+SELECT (COUNT(DISTINCT ?d) AS ?numDoencas)
+WHERE {
+	?d a :Disease .
+}
+
+Resposta obtida: 42
+
+
+2) Que doenças estão associadas ao sintoma "yellowish_skin"?
+-------------------------------------------------------------
+Query:
+SELECT DISTINCT ?doenca
+WHERE {
+	?doenca a :Disease ;
+					:hasSymptom :yellowish_skin .
+}
+ORDER BY ?doenca
+
+Resposta obtida:
+- :Alcoholic_hepatitis
+- :Chronic_cholestasis
+- :Hepatitis_B
+- :Hepatitis_C
+- :Hepatitis_D
+- :Hepatitis_E
+- :Jaundice
+- :hepatitis_A
+
+
+3) Que doenças estão associadas ao tratamento "exercise"?
+---------------------------------------------------------
+Query:
+SELECT DISTINCT ?doenca
+WHERE {
+	?doenca a :Disease ;
+					:hasTreatment :exercise .
+}
+ORDER BY ?doenca
+
+Resposta obtida:
+- :Arthritis
+- :Cervical_spondylosis
+- :Diabetes
+- :GERD
+- :Hypothyroidism
+- :Paralysis_brain_hemorrhage
+
+
+4) Lista ordenada alfabeticamente com o nome dos doentes
+---------------------------------------------------------
+Query:
+SELECT DISTINCT ?nome
+WHERE {
+	?p a :Patient ;
+		 :name ?nome .
+}
+ORDER BY ?nome
+
+
+5) Query CONSTRUCT para diagnosticar cada pessoa
+------------------------------------------------
+Regra usada: uma doença é atribuída ao doente quando TODOS os sintomas
+do doente estão contidos nos sintomas da doença.
+
+Query CONSTRUCT:
+CONSTRUCT {
+	?patient :hasDisease ?disease .
+}
+WHERE {
+	?patient a :Patient .
+	?disease a :Disease .
+	FILTER NOT EXISTS {
+		?patient :exhibitsSymptom ?sPaciente .
+		FILTER NOT EXISTS { ?disease :hasSymptom ?sPaciente }
+	}
+}
+
+Para acrescentar os triplos à ontologia: 
+INSERT { 
+	?patient :hasDisease ?disease .
+}
+WHERE {
+	?patient a :Patient .
+	?disease a :Disease .
+	FILTER NOT EXISTS {
+		?patient :exhibitsSymptom ?sPaciente .
+		FILTER NOT EXISTS { ?disease :hasSymptom ?sPaciente }
+	}
+	FILTER NOT EXISTS { ?patient :hasDisease ?disease }
+}
+
+
+6) Distribuição dos doentes pelas doenças 
+----------------------------------------
+SELECT ?doenca (COUNT(DISTINCT ?p) AS ?numDoentes)
+WHERE {
+	?p a :Patient ;
+		 :hasDisease ?doenca .
+}
+GROUP BY ?doenca
+ORDER BY DESC(?numDoentes) ?doenca
+
+
+7) Distribuição das doenças pelos sintomas 
+-----------------------------------------
+SELECT ?sintoma (COUNT(DISTINCT ?doenca) AS ?numDoencas)
+WHERE {
+	?doenca a :Disease ;
+					:hasSymptom ?sintoma .
+}
+GROUP BY ?sintoma
+ORDER BY DESC(?numDoencas) ?sintoma
+
+
+8) Distribuição das doenças pelos tratamentos 
+--------------------------------------------
+SELECT ?tratamento (COUNT(DISTINCT ?doenca) AS ?numDoencas)
+WHERE {
+	?doenca a :Disease ;
+					:hasTreatment ?tratamento .
+}
+GROUP BY ?tratamento
+ORDER BY DESC(?numDoencas) ?tratamento
+
+
+9) Lista das doenças e respetivos sintomas 
+------------------------------------------
+SELECT ?doenca (GROUP_CONCAT(DISTINCT STRAFTER(STR(?sintoma), "#"); separator=", ") AS ?listaSintomas)
+WHERE {
+	?doenca a :Disease ;
+					:hasSymptom ?sintoma .
+}
+GROUP BY ?doenca
+ORDER BY ?doenca
